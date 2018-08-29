@@ -1,0 +1,1 @@
+az aks get-credentials --resource-group rsg-aks-klb --name aks-docker-klb
