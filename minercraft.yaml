@@ -1,34 +1,31 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: minecraft-aks
+  name: minecraft
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: minecraft-aks
+        app: minecraft
     spec:
       containers:
-      - name: minecraft-aks
+      - name: minecraft-server
         image: openhack/minecraft-server
         ports:
         - containerPort: 25565
-          name: minecraft
-        - containerPort: 25575
-          name: rcon  
+          name: porta-minecraft
         env:
         - name: EULA
           value: "true"
-        
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: minecraft-aks
+  name: minecraft-server
 spec:
   type: LoadBalancer
   ports:
   - port: 25565
   selector:
-    app: minecraft-aks
+    app: minecraft
