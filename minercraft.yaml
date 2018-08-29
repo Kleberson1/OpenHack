@@ -11,13 +11,22 @@ spec:
     spec:
       containers:
       - name: minecraft-server
-        image: openhack/minecraft-server
+        image: openhack/minecraft-server:2.0
         ports:
         - containerPort: 25565
           name: porta-minecraft
+        - containerPort: 25575
+          name: rcon          
         env:
         - name: EULA
           value: "true"
+        volumeMounts:
+        - mountPath: "/data"
+          name: volume
+      volumes:
+        - name: volume
+          persistentVolumeClaim:
+           claimName: disk-minecraft
 ---
 apiVersion: v1
 kind: Service
@@ -29,3 +38,15 @@ spec:
   - port: 25565
   selector:
     app: minecraft
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: disk-minecraft
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: managed-premium
+  resources:
+    requests:
+      storage: 5Gi
