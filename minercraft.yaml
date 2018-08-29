@@ -15,7 +15,7 @@ spec:
         ports:
         - containerPort: 25565
           name: porta-minecraft
-        - env:
+        env:
         - name: EULA
           value: "true"
 ---
