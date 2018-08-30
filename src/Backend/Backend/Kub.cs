@@ -63,13 +63,20 @@ namespace Backend
 
             foreach(var pod in pods.Items)
             {
-                //_client.DeleteNamespacedPod();
+                V1DeleteOptions opt = new V1DeleteOptions();
+                _client.DeleteNamespacedPod(opt, pod.Metadata.Name, "default");
             }
         }
 
         public void DeleteService(string tenant)
         {
+            var services = _client.ListNamespacedService("default", labelSelector: "tenant=" + tenant);
 
+            foreach (var svc in services.Items)
+            {
+                V1DeleteOptions opt = new V1DeleteOptions();
+                _client.DeleteNamespacedService(opt, svc.Metadata.Name, "default");
+            }
         }
 
         public static void Teste()

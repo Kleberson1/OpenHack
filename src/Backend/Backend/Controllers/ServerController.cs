@@ -50,11 +50,19 @@ namespace Backend.Controllers
         [Route("create")]
         public string Create()
         {
-            string id = g_random.Next(100000).ToString();
+            string id = "tm" + g_random.Next(100000).ToString();
             _kub.CreatePod(id, "pod.yml");
             _kub.CreateService(id, "service.yml");
 
             return "Instance=" + id;
+        }
+
+        // GET api/server/create/id
+        [Route("delete/{id}")]
+        public void Delete(string id)
+        {
+            _kub.DeleteService(id);
+            _kub.DeletePod(id);
         }
 
         // POST api/values
