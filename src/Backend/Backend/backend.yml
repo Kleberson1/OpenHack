@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: backend
+  labels:
+    app: backend
+    test: true
+spec:
+  containers:
+  - name: fcatae-mine
+    image: fcatae/mine:1.1
+    ports:
+    - containerPort: 5000
+      targetPort: 80
+
+      name: porta
+    env:
+    - name: EULA
+      value: "true"

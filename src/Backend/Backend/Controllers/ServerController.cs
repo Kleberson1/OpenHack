@@ -29,8 +29,8 @@ namespace Backend.Controllers
                             name = svc.Metadata.Labels["tenant"],
                             endpoints = new
                             {
-                                minecraft = (svc.Spec.LoadBalancerIP ?? localhost) + ":25565",
-                                rcon = (svc.Spec.LoadBalancerIP ?? localhost) + ":25575"
+                                minecraft = (svc.Status?.LoadBalancer?.Ingress?.FirstOrDefault()?.Ip ?? localhost) + ":25565",
+                                rcon = (svc.Status?.LoadBalancer?.Ingress?.FirstOrDefault()?.Ip ?? localhost) + ":25575"
                             }
 
                         }).ToArray();
@@ -43,6 +43,16 @@ namespace Backend.Controllers
         public string Get(int id)
         {
             return "value";
+        }
+
+        // GET api/server/create/id
+        [HttpGet("create/{id}")]
+        public string Create(string id)
+        {
+            _kub.CreatePod(id, "pod.yml");
+            _kub.CreateService(id, "service.yml");
+
+            return "OK";
         }
 
         // POST api/values

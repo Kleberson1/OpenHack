@@ -14,8 +14,14 @@ namespace Backend
 
         public Kub()
         {
-            var config = KubernetesClientConfiguration.BuildConfigFromConfigFile();
-            if (config.AccessToken == null)
+            KubernetesClientConfiguration config = null;
+            try
+            {
+                config = KubernetesClientConfiguration.InClusterConfig();
+            }
+            catch { }
+            
+            if (config == null)
             {
                 config = new KubernetesClientConfiguration { Host = "http://127.0.0.1:8001" };
             }
@@ -49,6 +55,21 @@ namespace Backend
             yml.Spec.Selector.Add("tenant", tenant);
             var svc = _client.CreateNamespacedService(yml, "default");
             return svc.Metadata.Name;
+        }
+
+        public void DeletePod(string tenant)
+        {
+            var pods = _client.ListNamespacedPod("default", labelSelector: "tenant=" + tenant);
+
+            foreach(var pod in pods.Items)
+            {
+                //_client.DeleteNamespacedPod();
+            }
+        }
+
+        public void DeleteService(string tenant)
+        {
+
         }
 
         public static void Teste()
