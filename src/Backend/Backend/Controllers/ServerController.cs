@@ -9,6 +9,7 @@ namespace Backend.Controllers
     [Route("api/[controller]")]
     public class ServerController : Controller
     {
+        static Random g_random = new Random();
         Kub _kub;
 
         public ServerController(Kub kub)
@@ -46,13 +47,14 @@ namespace Backend.Controllers
         }
 
         // GET api/server/create/id
-        [HttpGet("create/{id}")]
-        public string Create(string id)
+        [Route("create")]
+        public string Create()
         {
+            string id = g_random.Next(100000).ToString();
             _kub.CreatePod(id, "pod.yml");
             _kub.CreateService(id, "service.yml");
 
-            return "OK";
+            return "Instance=" + id;
         }
 
         // POST api/values

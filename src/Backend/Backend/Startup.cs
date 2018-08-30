@@ -26,6 +26,8 @@ namespace Backend
             Kub.Teste();
             services.AddSingleton<Kub>();
             services.AddMvc();
+            services.AddCors();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +37,7 @@ namespace Backend
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors(option => option.AllowAnyOrigin());
 
             app.UseMvc();
         }
