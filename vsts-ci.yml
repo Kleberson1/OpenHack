@@ -11,9 +11,9 @@ variables:
 
 steps:
 - script: |
-    cd src/Backend
-    dotnet build Backend.sln --configuration $(buildConfiguration)
-    dotnet publish Backend.sln --configuration $(buildConfiguration) --output out
+#    cd src/Backend
+    dotnet build src/Backend/Backend.sln --configuration $(buildConfiguration)
+    dotnet publish src/Backend/Backend.sln --configuration $(buildConfiguration) --output out
     docker build -t $(dockerId).azurecr.io/backend:$BUILD_BUILDID .
     docker login -u $(dockerId) -p $pswd $(dockerid).azurecr.io
     docker push $(dockerId).azurecr.io/backend:$BUILD_BUILDID
