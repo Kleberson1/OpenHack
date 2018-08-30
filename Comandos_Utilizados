@@ -10,6 +10,9 @@ kubectl apply -f minercraft.yaml
 //Lista todos os Pods
 kubectl get pods
 
+//Descreve um Pod passando todas suas informações
+kubectl describe pod mine-tenant-fsvd9
+
 //Lista todos os Pods e "assite" as atualizações, ao listas acompanhe no campo status o estado do pod
 kubectl get pods -w
 
