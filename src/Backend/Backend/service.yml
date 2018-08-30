@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  generateName: mine-tenant-
+  label:
+    app: minebackend
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 25565
+  selector:
+    app: minebackend

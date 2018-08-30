@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  generateName: mine-tenant-
+  labels:
+    app: minebackend
+    test: true
+spec:
+  containers:
+  - name: minecraft-server
+    image: openhack/minecraft-server:2.0
+    ports:
+    - containerPort: 25565
+      name: porta-minecraft
+    - containerPort: 25575
+      name: rcon          
+    env:
+    - name: EULA
+      value: "true"
