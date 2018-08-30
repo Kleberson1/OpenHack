@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Backend.Controllers
 {
@@ -15,6 +17,41 @@ namespace Backend.Controllers
         public ServerController(Kub kub)
         {
             _kub = kub;
+        }
+
+        [HttpGet("count")]
+        public int GetCount()
+        {
+            var svcs = _kub.ListServices();
+            return svcs.Items.Count;
+        }
+
+        [HttpGet("players")]
+        public int GetPlayersCount()
+        {
+            var svcs = _kub.ListServices();
+
+            int total = 0;
+            using (var req = new HttpClient())
+            {
+                foreach(var item in svcs.Items)
+                {
+                    string ip = item.Status?.LoadBalancer?.Ingress?.FirstOrDefault()?.Ip;
+                    if (ip == null)
+                        continue;
+
+                    string url = $"https://mcapi.us/server/status?ip={ip}&port=25565";
+
+                    string result = req.GetAsync(url).Result.Content.ReadAsStringAsync().Result;
+                    dynamic json = JsonConvert.DeserializeObject(result);
+
+                    var count = (int)json.players.now;
+
+                    total += count;
+                }
+            }
+
+            return total;
         }
 
         // GET api/values
