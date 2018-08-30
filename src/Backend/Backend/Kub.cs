@@ -45,6 +45,7 @@ namespace Backend
         public string CreateService(string tenant, string filename)
         {
             var yml = Yaml.LoadFromFileAsync<V1Service>(filename).Result;
+            yml.Metadata.Labels.Add("tenant", tenant);
             yml.Spec.Selector.Add("tenant", tenant);
             var svc = _client.CreateNamespacedService(yml, "default");
             return svc.Metadata.Name;
@@ -56,7 +57,7 @@ namespace Backend
 
             bool hasNginx = false;
 
-            var list = kub.ListPods();
+            var list = kub.ListServices();
 
             foreach (var item in list.Items)
             {
@@ -68,8 +69,8 @@ namespace Backend
                 }
             }
 
-            kub.CreatePod("t1", "pod.yml");
-            kub.CreateService("t1", "service.yml");
+            //kub.CreatePod("t1", "pod.yml");
+            //kub.CreateService("t1", "service.yml");
         }
 
 

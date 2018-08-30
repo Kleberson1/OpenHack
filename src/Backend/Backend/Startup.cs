@@ -24,7 +24,7 @@ namespace Backend
         public void ConfigureServices(IServiceCollection services)
         {
             Kub.Teste();
-
+            services.AddSingleton<Kub>();
             services.AddMvc();
         }
 
