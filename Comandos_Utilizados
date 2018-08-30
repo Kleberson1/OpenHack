@@ -1,0 +1,48 @@
+
+
+// Obtem as credenciais para utilizar os comandos do azure-cli
+// Vale lembrar que ele cria um arquivo C:\Users\Kleberson\.kube\config onde guarda as credenciais
+az aks get-credentials --resource-group=rsg-aks-klb --name=aks-docker-klb
+
+// Aplica as configurações do arquivo yaml do kubernets
+kubectl apply -f minercraft.yaml
+
+//Lista todos os Pods
+kubectl get pods
+
+//Lista todos os Pods e "assite" as atualizações, ao listas acompanhe no campo status o estado do pod
+kubectl get pods -w
+
+//Lista todos os nodes existentes
+kubectl get nodes
+
+//Lista quais serviços estão sendo executados 
+kubectl get services
+get service serv-minecraft --watch
+
+//
+kubectl get sc
+
+//
+az aks browse --resource-group rsg-aks-klb --name aks-docker-klb
+
+//Apaga um pod / apaga todos
+kubectl delete minecraft-server
+ kubectl delete pods --all
+
+ //Comandos para execução e interação dentro do pod
+ kubectl exec minecraft-59c88c48f4-pnthx ls /
+ kubectl exec minecraft-59c88c48f4-pnthx ls /bin/
+ kubectl exec minecraft-59c88c48f4-qllgp ls /data
+
+// O -it informa que voce irá interagir com o pod via bash
+ kubectl exec -it minecraft-59c88c48f4-pnthx /bin/bash
+
+//Cria uma arquivo pelo bash
+touch arquivo.teste
+
+//Mostra os deployments efetuados
+kubectl get deployments
+
+//Mostra informações do pod
+kubectl describe pod minecraft-59c88c48f4-qllgp
