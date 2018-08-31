@@ -77,6 +77,12 @@ namespace Backend.Controllers
                 return incNodes.ToString();
             }
 
+            if( avgSvcs < idealCount )
+            {
+                int decNodes = nodes.Items.Count - 1;
+                return decNodes.ToString();
+            }
+
             return "";
         }
 
