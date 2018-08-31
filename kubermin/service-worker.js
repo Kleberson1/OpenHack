@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.4.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.ddd66a46941ce152ec05e581b825b0ca.js"
+  "/precache-manifest.7786b48d46d35f05a9b72c7a042de68e.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "neptune"});
