@@ -81,7 +81,9 @@ namespace Backend.Controllers
                 }
             }
 
-            return total/n;
+            int avgCount = total / n;
+
+            return avgCount.ToString();
         }
 
         // GET api/values
