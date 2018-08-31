@@ -169,7 +169,7 @@ namespace Backend.Controllers
         public string CreateTenant(string id)
         {
             _kub.CreatePodShare(id, "pod2.yml");
-            _kub.CreateService(id, "service.yml");
+            _kub.CreateService(id, "service2.yml");
 
             return "Instance=" + id;
         }

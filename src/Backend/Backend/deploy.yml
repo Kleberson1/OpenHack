@@ -1,0 +1,31 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: azure-just-mine
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: azure-just-mine
+    spec:
+      containers:
+      - name: azure-just-mine
+        image: openhack/minecraft-server:2.0
+        ports:
+        - containerPort: 25565
+          name: porta-minecraft
+        env:
+        - name: EULA
+          value: "true"
+        - name: MAX_PLAYERS
+          value: "150"
+        volumeMounts:
+        - name: azure-disk
+          mountPath: "/mnt/azure"
+      volumes:
+       - name: azure-disk
+         azureFile:
+           secretName: minegeostorage-secret
+           shareName: aksshare
+           readOnly: false

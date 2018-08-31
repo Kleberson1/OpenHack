@@ -27,4 +27,4 @@ spec:
       azureFile:
         secretName: minegeostorage-secret
         shareName: aksshare
-        readOnly: false
+        
