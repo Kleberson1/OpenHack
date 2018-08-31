@@ -83,7 +83,13 @@ namespace Backend.Controllers
 
             int avgCount = total / n;
 
-            return avgCount.ToString();
+            if( avgCount > 15 )
+            {
+                // Auto-scale                
+                return "AUTOSCALE: instancia = " + Create();
+            }
+
+            return "user load=" + avgCount.ToString();
         }
 
         // GET api/values
