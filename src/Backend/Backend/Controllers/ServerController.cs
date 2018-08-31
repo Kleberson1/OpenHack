@@ -54,6 +54,36 @@ namespace Backend.Controllers
             return total;
         }
 
+        [HttpGet("autoscale")]
+        public string AutoScale()
+        {
+            var svcs = _kub.ListServices();
+
+            int total = 0;
+            int n = 0;
+            using (var req = new HttpClient())
+            {
+                foreach (var item in svcs.Items)
+                {
+                    string ip = item.Status?.LoadBalancer?.Ingress?.FirstOrDefault()?.Ip;
+                    if (ip == null)
+                        continue;
+
+                    string url = $"https://mcapi.us/server/status?ip={ip}&port=25565";
+
+                    string result = req.GetAsync(url).Result.Content.ReadAsStringAsync().Result;
+                    dynamic json = JsonConvert.DeserializeObject(result);
+
+                    var count = (int)json.players.now;
+
+                    total += count;
+                    n++;
+                }
+            }
+
+            return total/n;
+        }
+
         // GET api/values
         [HttpGet]
         public object Get()
