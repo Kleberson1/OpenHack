@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: backend
-      image: registrotime4openhack.azurecr.io/backend:18
+      image: registrotime4openhack.azurecr.io/backend:23
   imagePullSecrets:
     - name: onedasecret
 --

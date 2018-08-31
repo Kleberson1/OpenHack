@@ -17,3 +17,5 @@ spec:
     env:
     - name: EULA
       value: "true"
+    - name: MAX_PLAYERS
+      value: "200"
