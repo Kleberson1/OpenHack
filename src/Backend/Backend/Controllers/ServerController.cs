@@ -54,6 +54,32 @@ namespace Backend.Controllers
             return total;
         }
 
+        [HttpGet("nodes")]
+        public int GetNodes()
+        {
+            var nodes = _kub.ListNodes();
+
+            return nodes.Items.Count;
+        }
+
+        [HttpGet("autoscalenodes")]
+        public string AutoScaleNodes()
+        {
+            var nodes = _kub.ListNodes();
+            var svcs = _kub.ListServices();
+
+            int avgSvcs = svcs.Items.Count/nodes.Items.Count;
+            int idealCount = 4;
+
+            if( avgSvcs >= idealCount )
+            {
+                int incNodes = nodes.Items.Count + 1;
+                return incNodes.ToString();
+            }
+
+            return "";
+        }
+
         [HttpGet("autoscale")]
         public string AutoScale()
         {

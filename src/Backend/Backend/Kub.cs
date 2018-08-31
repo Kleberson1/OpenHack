@@ -39,6 +39,11 @@ namespace Backend
             return _client.ListNamespacedService("default", labelSelector: "tenant");
         }
 
+        public V1NodeList ListNodes()
+        {
+            return _client.ListNode();
+        }
+
         public string CreatePod(string tenant, string filename)
         {
             var yml = Yaml.LoadFromFileAsync<V1Pod>(filename).Result;
