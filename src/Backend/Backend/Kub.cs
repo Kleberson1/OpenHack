@@ -52,6 +52,16 @@ namespace Backend
 
             return pod.Metadata.Name;
         }
+        
+        public string CreatePodShare(string tenant, string filename)
+        {
+            var yml = Yaml.LoadFromFileAsync<V1Pod>(filename).Result;
+            yml.Metadata.Labels.Add("tenant", tenant);
+            yml.Spec.Volumes[0].AzureFile.ShareName = tenant;
+            var pod = _client.CreateNamespacedPod(yml, "default");
+
+            return pod.Metadata.Name;
+        }
 
         public string CreateService(string tenant, string filename)
         {

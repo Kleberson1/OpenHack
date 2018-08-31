@@ -165,6 +165,16 @@ namespace Backend.Controllers
         }
 
         // GET api/server/create/id
+        [Route("create/{id}")]
+        public string CreateTenant(string id)
+        {
+            _kub.CreatePodShare(id, "pod2.yml");
+            _kub.CreateService(id, "service.yml");
+
+            return "Instance=" + id;
+        }
+
+        // GET api/server/create/id
         [Route("delete/{id}")]
         public void Delete(string id)
         {
